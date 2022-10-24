@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <script src="./loopInfinite.js" type="text/javascript"></script>
+</head>
+
+<body>
+
+    <div style="display: flex; flex-direction: column">
+        <span id="output1"></span>
+        <span id="output2"></span>
+
+    </div>
+    <button id="ButtonAumentar" onclick="aumentar()">Implement my value 0</button>
+    <button onclick="startLoading()">Fudido</button>
+
+</body>
+
+<script>
+
+
+    var valueButton = 0
+    function aumentar() {
+        ++valueButton
+        const button = document.getElementById('ButtonAumentar')
+        button.innerText = `Implement my value ${valueButton}`
+
+    }
+
+    const worker = new Worker('./worker.js', {
+        type: "module"
+    });
+
+
+    function startLoading() {
+
+
+        worker.addEventListener('message', function (e) {
+            console.log('Result: ', event.data)
+        });
+
+        worker.postMessage('Start')
+
+
+
+    }
+
+
+
+</script>
+
+</html>
